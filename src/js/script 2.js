@@ -1,0 +1,12 @@
+zar_plata = parseInt(prompt('Введите свою зврплату'));
+premia_size = zar_plata/100*15;
+premia = zar_plata + premia_size;
+alert (`Премия 15%. На руки ${premia}`);
+ZarplataPremia_Sum = premia;
+nalog_size = ZarplataPremia_Sum/100*10;
+nalog = ZarplataPremia_Sum - nalog_size;
+alert(`Налог -10%. На руки ${nalog}`);
+buy_store = nalog - 190;
+alert (`В магазине - 190. Осталось ${buy_store}`);
+get_wife = buy_store/2;
+alert (`Отдал половину жене. В итоге осталось ${get_wife}`);
