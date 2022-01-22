@@ -15,9 +15,9 @@ pipeBottom.src = "img/flappy_bird_pipeBottom.png";
 
 document.addEventListener("keydown", moveUp);
 
-function moveUp() {
+//function moveUp() {
     
-}
+//}
 
 var gap = 120; //расстояние между препетствиями
 var xPos = 40; //позиция птички по x
@@ -34,6 +34,10 @@ function draw() {
 
     yPos += grav;
     requestAnimationFrame(draw);
+
+    document.addEventListener('keydown', function(){
+        yPos-=grav;
+    })
         
 }
 pipeBottom.onload = draw;
