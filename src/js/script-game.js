@@ -7,36 +7,47 @@ var fg = new Image();
 pipeUp = new Image();
 pipeBottom = new Image();
 
-bird.src = "img/flappy_bird_bird.png";
-bg.src = "img/flappy_bird_bg.png";
-fg.src = "img/flappy_bird_fg.png";
-pipeUp.src = "img/flappy_bird_pipeUp.png";
-pipeBottom.src = "img/flappy_bird_pipeBottom.png";
+bird.src = "../resources/img/flappy_bird_bird.png";
+bg.src = "../resources/img/flappy_bird_bg.png";  //background
+fg.src = "../resources/img/flappy_bird_fg.png";  //Earth
+pipeUp.src = "../resources/img/flappy_bird_pipeUp.png";
+pipeBottom.src = "../resources/img/flappy_bird_pipeBottom.png";
 
 document.addEventListener("keydown", moveUp);
 
 function moveUp() {
-    
+    yPos -= keyUp;
 }
 
 var gap = 120; //расстояние между препетствиями
 var xPos = 40; //позиция птички по x
 var yPos = 350;//позиция птички по y
 var grav = 1;//значение для гравитации вниз
-var keyUp = 20;//при нажатии на какую-либо кнпку, птичка летит верх
+var keyUp = 30;//при нажатии на какую-либо кнпку, птичка летит верх
+
+var xPosPipeDown = 150;
+var xPosPipeDownAnimation = 1;
+var yPosPipeDown = 350;
+
+var xPosPipeUp = 150;
+var xPosPipeUpAnimation = 150;
+var yPosPipeUp = -200;
 
 function draw() {
     ctx.drawImage(bg, 0, 0);
-    ctx.drawImage(pipeUp, 150, 0);
-    ctx.drawImage(pipeBottom, 150, 0 + pipeUp.height + gap);
+    ctx.drawImage(pipeUp, xPosPipeUp, yPosPipeUp);
+    ctx.drawImage(pipeBottom, xPosPipeDown, yPosPipeDown);
     ctx.drawImage(fg, 0, 460);
     ctx.drawImage(bird, xPos, yPos);
 
     yPos += grav;
     requestAnimationFrame(draw);
-        
+
+    function animationPipeUp{
+    	xPosPipeUp -= xPosPipeUpAnimation;
+    }
+    requestAnimationFrame(animationPipeUp);
+
 }
 pipeBottom.onload = draw;
-
-
 
