@@ -26,11 +26,9 @@ var grav = 1;//значение для гравитации вниз
 var keyUp = 30;//при нажатии на какую-либо кнпку, птичка летит верх
 
 var xPosPipeDown = 150;
-var xPosPipeDownAnimation = 1;
 var yPosPipeDown = 350;
 
 var xPosPipeUp = 150;
-var xPosPipeUpAnimation = 150;
 var yPosPipeUp = -200;
 
 function draw() {
@@ -42,11 +40,6 @@ function draw() {
 
     yPos += grav;
     requestAnimationFrame(draw);
-
-    function animationPipeUp{
-    	xPosPipeUp -= xPosPipeUpAnimation;
-    }
-    requestAnimationFrame(animationPipeUp);
 
 }
 pipeBottom.onload = draw;
