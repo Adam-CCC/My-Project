@@ -25,11 +25,12 @@ pipeAnim [0] = {
     y : 0
 }
 
-var jump = 20;
+var jump = 30;
 var pipeDistance = 80;
 var xPos = 50;
 var yPos = 80;
-var grav = 1;
+var grav = 2;
+
 
 function draw(){
     ctx.drawImage(bg, 0, 0);
@@ -37,6 +38,13 @@ function draw(){
         ctx.drawImage(pipeUp, pipeAnim[i].x, pipeAnim[i].y);
         ctx.drawImage(pipeBottom, pipeAnim[i].x, pipeAnim[i].y + pipeUp.height + pipeDistance);
         pipeAnim[i].x--;
+
+        if(pipeAnim[i].x == 125){
+            pipeAnim.push({
+                x : cvs.width,
+                y : Math.floor(Math.random() * pipeUp.height) - pipeUp.height
+            });
+        }
     }
     ctx.drawImage(fg, 0, cvs.height - fg.height);
     ctx.drawImage(bird, xPos, yPos);
@@ -46,3 +54,4 @@ function draw(){
 
 }
 pipeBottom.onload = draw;
+
