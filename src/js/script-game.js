@@ -52,6 +52,13 @@ function draw(){
     yPos += grav;
     requestAnimationFrame(draw);
 
+    if (yPos >= cvs.height - fg.height){
+        location.reload();
+    }
+
+    /*if (xPos + bird.height >= ){
+        location.reload();
+    }*/
 }
 pipeBottom.onload = draw;
 
