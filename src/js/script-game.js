@@ -1,41 +1,44 @@
-var cnv = document.getElementById("canvas");
-var ctx = cnv.getContext("2d");
+var cvs = document.getElementById("canvas");
+var ctx = cvs.getContext("2d");
 
-var bird = new Image();
 var bg = new Image();
+var bird = new Image();
 var fg = new Image();
-pipeUp = new Image();
-pipeBottom = new Image();
+var pipeUp = new Image();
+var pipeBottom = new Image();
 
+bg.src = "../resources/img/flappy_bird_bg.png";
 bird.src = "../resources/img/flappy_bird_bird.png";
-bg.src = "../resources/img/flappy_bird_bg.png";  //background
-fg.src = "../resources/img/flappy_bird_fg.png";  //Earth
+fg.src = "../resources/img/flappy_bird_fg.png";
 pipeUp.src = "../resources/img/flappy_bird_pipeUp.png";
 pipeBottom.src = "../resources/img/flappy_bird_pipeBottom.png";
 
-document.addEventListener("keydown", moveUp);
+addEventListener("keydown", moveUp);
 
-function moveUp() {
-    yPos -= keyUp;
+function moveUp(){
+    yPos -= jump;
 }
 
-var gap = 120; //расстояние между препетствиями
-var xPos = 40; //позиция птички по x
-var yPos = 350;//позиция птички по y
-var grav = 1;//значение для гравитации вниз
-var keyUp = 30;//при нажатии на какую-либо кнпку, птичка летит верх
+var pipeAnim = [];
+pipeAnim [0] = {
+    x : cvs.width,
+    y : 0
+}
 
-var xPosPipeDown = 150;
-var yPosPipeDown = 350;
+var jump = 20;
+var pipeDistance = 80;
+var xPos = 50;
+var yPos = 80;
+var grav = 1;
 
-var xPosPipeUp = 150;
-var yPosPipeUp = -200;
-
-function draw() {
+function draw(){
     ctx.drawImage(bg, 0, 0);
-    ctx.drawImage(pipeUp, xPosPipeUp, yPosPipeUp);
-    ctx.drawImage(pipeBottom, xPosPipeDown, yPosPipeDown);
-    ctx.drawImage(fg, 0, 460);
+    for(var i = 0; i < pipeAnim.length; i++){
+        ctx.drawImage(pipeUp, pipeAnim[i].x, pipeAnim[i].y);
+        ctx.drawImage(pipeBottom, pipeAnim[i].x, pipeAnim[i].y + pipeUp.height + pipeDistance);
+        pipeAnim[i].x--;
+    }
+    ctx.drawImage(fg, 0, cvs.height - fg.height);
     ctx.drawImage(bird, xPos, yPos);
 
     yPos += grav;
@@ -43,4 +46,3 @@ function draw() {
 
 }
 pipeBottom.onload = draw;
-
