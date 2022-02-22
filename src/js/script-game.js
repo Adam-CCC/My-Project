@@ -34,6 +34,7 @@ var grav = 2;
 
 function draw(){
     ctx.drawImage(bg, 0, 0);
+
     for(var i = 0; i < pipeAnim.length; i++){
         ctx.drawImage(pipeUp, pipeAnim[i].x, pipeAnim[i].y);
         ctx.drawImage(pipeBottom, pipeAnim[i].x, pipeAnim[i].y + pipeUp.height + pipeDistance);
@@ -45,20 +46,22 @@ function draw(){
                 y : Math.floor(Math.random() * pipeUp.height) - pipeUp.height
             });
         }
+
+        if(xPos + bird.width >= pipeAnim[i].x
+            && xPos <= pipeAnim[i].x + pipeUp.width
+            && (yPos <= pipeAnim[i].y + pipeUp.height
+            || yPos + bird.height >= pipeAnim[i].y + pipeUp.height + pipeDistance) || yPos + bird.height >= cvs.height - fg.height) {
+            location.reload();
+        }
     }
+
+
     ctx.drawImage(fg, 0, cvs.height - fg.height);
     ctx.drawImage(bird, xPos, yPos);
 
     yPos += grav;
     requestAnimationFrame(draw);
 
-    if (yPos >= cvs.height - fg.height){
-        location.reload();
-    }
-
-    /*if (xPos + bird.height >= ){
-        location.reload();
-    }*/
-}
+}   
 pipeBottom.onload = draw;
 
