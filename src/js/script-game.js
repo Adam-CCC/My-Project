@@ -1,46 +1,67 @@
-var cnv = document.getElementById("canvas");
-var ctx = cnv.getContext("2d");
+var cvs = document.getElementById("canvas");
+var ctx = cvs.getContext("2d");
 
-var bird = new Image();
 var bg = new Image();
+var bird = new Image();
 var fg = new Image();
-pipeUp = new Image();
-pipeBottom = new Image();
+var pipeUp = new Image();
+var pipeBottom = new Image();
 
-bird.src = "img/flappy_bird_bird.png";
-bg.src = "img/flappy_bird_bg.png";
-fg.src = "img/flappy_bird_fg.png";
-pipeUp.src = "img/flappy_bird_pipeUp.png";
-pipeBottom.src = "img/flappy_bird_pipeBottom.png";
+bg.src = "../resources/img/flappy_bird_bg.png";
+bird.src = "../resources/img/flappy_bird_bird.png";
+fg.src = "../resources/img/flappy_bird_fg.png";
+pipeUp.src = "../resources/img/flappy_bird_pipeUp.png";
+pipeBottom.src = "../resources/img/flappy_bird_pipeBottom.png";
 
-document.addEventListener("keydown", moveUp);
+addEventListener("keydown", moveUp);
 
-//function moveUp() {
-    
-//}
+function moveUp(){
+    yPos -= jump;
+}
 
-var gap = 120; //расстояние между препетствиями
-var xPos = 40; //позиция птички по x
-var yPos = 350;//позиция птички по y
-var grav = 1;//значение для гравитации вниз
-var keyUp = 20;//при нажатии на какую-либо кнпку, птичка летит верх
+var pipeAnim = [];
+pipeAnim [0] = {
+    x : cvs.width,
+    y : 0
+}
 
-function draw() {
+var jump = 30;
+var pipeDistance = 80;
+var xPos = 50;
+var yPos = 80;
+var grav = 2;
+
+
+function draw(){
     ctx.drawImage(bg, 0, 0);
-    ctx.drawImage(pipeUp, 150, 0);
-    ctx.drawImage(pipeBottom, 150, 0 + pipeUp.height + gap);
-    ctx.drawImage(fg, 0, 460);
+
+    for(var i = 0; i < pipeAnim.length; i++){
+        ctx.drawImage(pipeUp, pipeAnim[i].x, pipeAnim[i].y);
+        ctx.drawImage(pipeBottom, pipeAnim[i].x, pipeAnim[i].y + pipeUp.height + pipeDistance);
+        pipeAnim[i].x--;
+
+        if(pipeAnim[i].x == 125){
+            pipeAnim.push({
+                x : cvs.width,
+                y : Math.floor(Math.random() * pipeUp.height) - pipeUp.height
+            });
+        }
+
+        if(xPos + bird.width >= pipeAnim[i].x
+            && xPos <= pipeAnim[i].x + pipeUp.width
+            && (yPos <= pipeAnim[i].y + pipeUp.height
+            || yPos + bird.height >= pipeAnim[i].y + pipeUp.height + pipeDistance) || yPos + bird.height >= cvs.height - fg.height) {
+            location.reload();
+        }
+    }
+
+
+    ctx.drawImage(fg, 0, cvs.height - fg.height);
     ctx.drawImage(bird, xPos, yPos);
 
     yPos += grav;
     requestAnimationFrame(draw);
 
-    document.addEventListener('keydown', function(){
-        yPos-=grav;
-    })
-        
-}
+}   
 pipeBottom.onload = draw;
-
-
 
