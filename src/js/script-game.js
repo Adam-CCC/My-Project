@@ -25,11 +25,14 @@ pipeAnim [0] = {
     y : 0
 }
 
+var score = 0;
+
 var jump = 30;
 var pipeDistance = 80;
 var xPos = 50;
 var yPos = 80;
 var grav = 2;
+
 
 
 function draw(){
@@ -53,15 +56,21 @@ function draw(){
             || yPos + bird.height >= pipeAnim[i].y + pipeUp.height + pipeDistance) || yPos + bird.height >= cvs.height - fg.height) {
             location.reload();
         }
+
+        if (pipeAnim[i].x == 5){
+            score++;
+        }
     }
-
-
     ctx.drawImage(fg, 0, cvs.height - fg.height);
     ctx.drawImage(bird, xPos, yPos);
 
     yPos += grav;
     requestAnimationFrame(draw);
-
+    ctx.font = "30px Arial";
+    ctx.fillText("Счет: " + score, 10, cvs.height - 20);
+    
+    
 }   
 pipeBottom.onload = draw;
+
 
